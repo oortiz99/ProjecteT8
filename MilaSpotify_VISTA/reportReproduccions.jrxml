@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportReproduccions" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c092534-e656-4ba1-a203-fc57d06eabb4">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramProId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select p.pro_titol,p.pro_actiu,p.pro_tipus,e.est_nom,cli.cli_nom,cli.cli_cognoms,
+repr.rep_moment_temporal,c.can_durada,c.can_any_creacio,art.art_nom,alb.alb_durada,alb.alb_any_creacio,
+ll.lis_durada, count(llc.lic_id_llista) as qtatProdLis , count(alc.alc_id_album) as qtatCanAlbum
+from reproduccio repr
+join client cli on cli.cli_id = repr.rep_id_client
+right join producte p on repr.rep_id_producte = p.pro_id
+join estil e on e.est_id = p.pro_estil
+left join canco c on c.can_id = p.pro_id
+left join artista art on art.art_id = c.can_interpret
+left join album alb on alb.alb_id = p.pro_id
+left join llista ll on ll.lis_id = p.pro_id
+left join album_contingut alc on alc.alc_id_album = alb.alb_id
+left join llista_contingut llc on llc.lic_id_llista = ll.lis_id
+where p.pro_id = $P{paramProId}
+group by p.pro_titol,p.pro_actiu,p.pro_tipus,e.est_nom,cli.cli_nom,cli.cli_cognoms,
+repr.rep_moment_temporal,c.can_durada,c.can_any_creacio,art.art_nom,alb.alb_durada,alb.alb_any_creacio,
+ll.lis_durada]]>
+	</queryString>
+	<field name="PRO_TITOL" class="java.lang.String"/>
+	<field name="PRO_ACTIU" class="java.lang.String"/>
+	<field name="PRO_TIPUS" class="java.lang.String"/>
+	<field name="EST_NOM" class="java.lang.String"/>
+	<field name="CLI_NOM" class="java.lang.String"/>
+	<field name="CLI_COGNOMS" class="java.lang.String"/>
+	<field name="REP_MOMENT_TEMPORAL" class="java.sql.Timestamp"/>
+	<field name="CAN_DURADA" class="java.math.BigDecimal"/>
+	<field name="CAN_ANY_CREACIO" class="java.math.BigDecimal"/>
+	<field name="ART_NOM" class="java.lang.String"/>
+	<field name="ALB_DURADA" class="java.math.BigDecimal"/>
+	<field name="ALB_ANY_CREACIO" class="java.math.BigDecimal"/>
+	<field name="LIS_DURADA" class="java.math.BigDecimal"/>
+	<field name="QTATPRODLIS" class="java.math.BigDecimal"/>
+	<field name="QTATCANALBUM" class="java.math.BigDecimal"/>
+	<group name="Tipus">
+		<groupExpression><![CDATA[$F{PRO_TIPUS}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3819a739-3ee1-48af-9a03-7fd37c29695f" x="64" y="10" width="447" height="58"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[Reproduccions]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="144" splitType="Stretch">
+			<textField>
+				<reportElement uuid="77cbcd06-d825-4b42-96da-605fde293484" x="64" y="0" width="161" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PRO_TITOL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="40fc8aad-f777-4ddb-8e95-735a3548e420" x="0" y="0" width="64" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Producte: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="978e4d89-b7df-4619-8687-ea98295a0e85" x="41" y="20" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PRO_ACTIU}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0f23ebad-fd5c-45ef-b1eb-72ed00fbed8e" x="0" y="20" width="41" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actiu:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bafdf7d1-0340-40b8-81b2-c1ef044c9544" x="0" y="40" width="41" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipus:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9d2cf0e0-6c25-4615-83e5-ca95ef67faac" x="31" y="60" width="173" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{EST_NOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="05e0f292-39da-4d17-870e-07f8abf57060" x="0" y="60" width="31" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5a0cdffd-efd5-4c27-a796-24ae55868fb3" x="0" y="124" width="152" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="261a8add-1d0f-4a76-bef4-ec8a9f0e5571" x="320" y="124" width="201" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5ed38c2f-3f08-427e-a1ff-01392d6ec398" x="41" y="40" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("L")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[Llista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="db5b4344-08b3-4a44-b671-bbb1ad664781" x="41" y="40" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("C")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[Canço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eb0a8620-45d7-40df-8599-dc8ac0e4a2cf" x="41" y="40" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("A")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[Àlbum]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c1c8410b-db45-4d94-b177-0efb365bdb1d" x="358" y="40" width="118" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("C")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CAN_ANY_CREACIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d8072c19-c86f-4c44-8d2e-d99ffd489787" x="294" y="40" width="64" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("C") || $F{PRO_TIPUS}.equals("A")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Any creacio: ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0415171a-51b1-4b16-a3a5-08e740a2453c" x="41" y="80" width="120" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("C")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ART_NOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5e94b1b2-858a-4357-a30c-a233fd6afe56" x="0" y="80" width="41" height="20">
+					<printWhenExpression><![CDATA[$F{ART_NOM}!=null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Artista: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7f89cb30-64db-43df-bd79-f85936a23cd2" x="338" y="20" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("C")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CAN_DURADA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dc3454e8-449e-43ff-b033-a9881af4d28c" x="294" y="20" width="44" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Durada:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dcce9ca1-1ba2-408c-ae1c-32950d1cde33" x="338" y="20" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("A")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ALB_DURADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f356a581-ed69-466a-9a84-2e94332ee356" x="358" y="40" width="118" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("A")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ALB_ANY_CREACIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0d1426d6-1546-4b2f-9a0f-840dc3ab70ca" x="338" y="20" width="100" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("L")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LIS_DURADA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="aab6feb3-020d-4efc-854b-d63416e7212c" x="294" y="60" width="115" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("A") || $F{PRO_TIPUS}.equals("L")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantitat de productes:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="80996d07-979e-4286-8f31-48b72a2c89fe" x="409" y="60" width="90" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("L")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{QTATPRODLIS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7cbedbf4-39c1-44c9-bce0-834f4a7da0df" x="409" y="60" width="90" height="20">
+					<printWhenExpression><![CDATA[$F{PRO_TIPUS}.equals("A")]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{QTATCANALBUM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dca22059-ead6-46d8-ae2f-f63b62e85896" x="194" y="124" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="b15bad97-4843-4aae-a0fb-afc2113520de" x="0" y="1" width="152" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{REP_MOMENT_TEMPORAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4f79cbf2-cb31-4018-a1a5-0a7a660507ed" x="320" y="1" width="89" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CLI_NOM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="962a43eb-664c-49c4-9375-4b60043a13b0" x="409" y="1" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CLI_COGNOMS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm.ss" isBlankWhenNull="true">
+				<reportElement uuid="4574485b-fff6-41fa-92ce-351e483df63f" x="194" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{REP_MOMENT_TEMPORAL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c4852fcc-b0da-43db-91f9-38dde4ccb737" x="0" y="0" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

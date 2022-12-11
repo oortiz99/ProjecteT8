@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportProductes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8519d726-7df1-4350-82fd-4bec51e795e0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramNomProd" class="java.lang.String"/>
+	<parameter name="paramActiu" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="paramTipus" class="java.util.Collection">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from producte p join estil e on p.pro_estil = e.est_id
+where ($X{IN, p.pro_tipus , paramTipus}) and
+($P{paramTitol} is null or upper(p.pro_titol) like upper($P{paramTitol}))
+and ($P{paramActiu} is null or upper(p.pro_actiu)=$P{paramActiu})]]>
+	</queryString>
+	<field name="PRO_ID" class="java.math.BigDecimal"/>
+	<field name="PRO_TITOL" class="java.lang.String"/>
+	<field name="PRO_ACTIU" class="java.lang.String"/>
+	<field name="PRO_ESTIL" class="java.math.BigDecimal"/>
+	<field name="PRO_TIPUS" class="java.lang.String"/>
+	<field name="EST_ID" class="java.math.BigDecimal"/>
+	<field name="EST_NOM" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4cb10b75-6797-4c76-8e28-fafcbb612210" x="56" y="0" width="470" height="49"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[PRODUCTES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7d286cda-c26d-4437-bf28-06a0681d79cc" x="0" y="2" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FILTRES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07e40763-775c-4d13-87aa-1ed822737e07" x="0" y="62" width="43" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipus:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="635fd6f4-8875-47b6-8f60-76bf93c26893" x="0" y="42" width="43" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estat:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a8da1e4-b0fa-4068-b158-7f519c74900a" x="0" y="22" width="43" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titol:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="84457f48-204b-4eea-8d37-62eb6b391bb0" x="43" y="22" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{paramTitol}.replace('%',"")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5ac122d6-7d9b-4ba3-9f28-146a637f1bfb" x="43" y="42" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{paramActiu}==null || $P{paramActiu}.equals("")?"Tots":$F{PRO_ACTIU}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="cfa8e0d3-d18f-4c55-afd0-143bb39859f5" x="43" y="62" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{paramTipus}==null?"Tots":""+$P{paramTipus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="376902d3-a7ea-421b-b4c7-2c4290729900" x="121" y="1" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2744accf-e94b-464b-9ea8-c5b8c2ce9793" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titol:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="036f381d-f92e-4d51-98d9-dc53d91db9c7" x="0" y="21" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="435d8be1-2a4c-4c42-8c05-b4f989836505" x="250" y="1" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipus:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="82917855-488c-4730-8ccf-0d75a15e47f5" x="380" y="1" width="100" height="20">
+					<printWhenExpression><![CDATA[$P{paramActiu}.equals("") || $P{paramActiu}==null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estat:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7a503c0c-4d02-43cb-9453-e2ce38c78a7b" x="121" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{EST_NOM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6ca258fe-fa0d-4d37-9184-855c62414119" x="0" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PRO_TITOL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b2f81f25-10c8-4d4d-8176-87c47ef6e497" x="250" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PRO_TIPUS}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="579b58ea-318c-4543-877b-f55f2303bda1" x="380" y="1" width="100" height="20">
+					<printWhenExpression><![CDATA[$P{paramActiu}.equals("") || $P{paramActiu}==null]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_ACTIU}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

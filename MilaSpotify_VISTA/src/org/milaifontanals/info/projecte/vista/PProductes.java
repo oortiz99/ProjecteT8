@@ -71,7 +71,7 @@ public class PProductes extends JPanel{
     
     private JRadioButton rbCrudActiu;
     private JRadioButton rbCrudInactiu;
-    private JTextField crudTitol;
+    private JTextField crudNomProd;
     private JComboBox cmbTipusProd;
     private JComboBox cmbEstils;
     
@@ -298,10 +298,10 @@ public class PProductes extends JPanel{
         panel_crud_titol.setLayout(new BoxLayout(panel_crud_titol,BoxLayout.X_AXIS));
         JLabel lTitolCrud = new JLabel("Titol: ");
         panel_crud_titol.add(lTitolCrud);    
-        crudTitol = new JTextField("",20);
-        crudTitol.setMaximumSize(crudTitol.getPreferredSize());
+        crudNomProd = new JTextField("",20);
+        crudNomProd.setMaximumSize(crudNomProd.getPreferredSize());
         
-        panel_crud_titol.add(crudTitol);
+        panel_crud_titol.add(crudNomProd);
         panel_crud_titol.setBorder(new EmptyBorder(10,10,0,0));
         panel_crud_producte.add(leftJustify(panel_crud_titol));
         JPanel panel_crud_actiu = new JPanel();
@@ -336,8 +336,7 @@ public class PProductes extends JPanel{
         panel_crud_actiu.add(panel_crud_estils);
         
         panel_crud_producte.add(leftJustify(panel_crud_actiu));
-        /********************************FI PANELL CRUD ACTIU + ESTIL*****************************************/
-        /********************************INICI PANELL ANY CREACIO I DURADA ****************************************/
+     
         JPanel panel_crud_can_any_creacio = new JPanel();
         panel_crud_can_any_creacio.setLayout(new BoxLayout(panel_crud_can_any_creacio,BoxLayout.X_AXIS));
         
@@ -360,7 +359,6 @@ public class PProductes extends JPanel{
         panel_crud_can_any_creacio.add(leftJustify(panel_crud_can_durada));  
         panel_crud_producte.add(leftJustify(panel_crud_can_any_creacio));
            
-        /**********************************INICI PANEL CRUD CANÇO****************************************************/
         panel_crud_canco = new JPanel();
         panel_crud_canco.setLayout(new BoxLayout(panel_crud_canco,BoxLayout.Y_AXIS));
         panel_crud_canco.setVisible(true);
@@ -381,9 +379,7 @@ public class PProductes extends JPanel{
         
         panel_crud_canco.add(leftJustify(panel_crud_can_artistes));
         panel_crud_producte.add(panel_crud_canco);
-        /**********************************FI PANEL CRUD CANÇO****************************************************/
-        
-        /***********************************INCI PANEL CRUD ALBUM*************************************************/
+       
         panel_crud_album = new JPanel();
         panel_crud_album.setVisible(false);
         panel_crud_album.setLayout(new BoxLayout(panel_crud_album,BoxLayout.Y_AXIS));
@@ -431,10 +427,7 @@ public class PProductes extends JPanel{
        
         
         panel_btn_add_del_prod.add(btnAfegirProducteA);    
-        
-        
-        
-        /**************************INICI INIT TAULA*********************************************/
+     
         String header_taula[] = {"Titol","Estil","Tipus","Estat"};    
         taulaModel = new DefaultTableModel(0, header_taula.length)
         {          
@@ -458,7 +451,7 @@ public class PProductes extends JPanel{
                 if(index>=0)
                 {
                     Producte p = mProductes.get(index);
-                    crudTitol.setText(p.getPro_titol());
+                    crudNomProd.setText(p.getPro_titol());
                     cmbEstils.setSelectedItem(p.getPro_estil());
                     mProductesAlbLlis = new ArrayList();
                     llistaProductes.clear();
@@ -637,7 +630,7 @@ public class PProductes extends JPanel{
                     boolean correcte = true;
                     try
                     {
-                        if(crudTitol.getText().length()<=0)
+                        if(crudNomProd.getText().length()<=0)
                         {
                             err += "Error! El titol es obligatori\n";
                             correcte = false;
@@ -656,7 +649,7 @@ public class PProductes extends JPanel{
                         {
                             String tipusProd = (String)cmbTipusProd.getSelectedItem();
                             Estil estilProd = (Estil)cmbEstils.getSelectedItem();
-                            String titProd = crudTitol.getText();
+                            String titProd = crudNomProd.getText();
                             String prodEstat = "";
                             if(rbActiu.isSelected())
                             {
@@ -703,8 +696,7 @@ public class PProductes extends JPanel{
                                             duradaCan = Integer.parseInt(txtCrudAnyCreacio.getText());
                                             if(duradaCan<=100)
                                             {
-                                                //Aquesta restriccio la considero ja que una durada que tingui 1 s es ilogic
-                                                //Per aixo miro que sigui mes gran a 100 , almenys que sigui realista
+                                               
                                                 err+= "Error! la durada no pot ser mes petit o igual que 100";
                                             }
                                         } catch (NumberFormatException nfe) 
@@ -720,7 +712,7 @@ public class PProductes extends JPanel{
                                     }else
                                     {
                                         Canso c = null;
-                                        //Si te un interpret l'agafem i el posem
+                                       
                                         if(cmbCrudCanArtista.getSelectedIndex()>0)
                                         {
                                             Artista a = (Artista)cmbCrudCanArtista.getSelectedItem();
@@ -888,7 +880,7 @@ public class PProductes extends JPanel{
                             int id_prod_selec = mProductes.get(t_productes.getSelectedRow()).getPro_id();//agafem la id del producte seleccionat ja 
                           
              
-                            if(crudTitol.getText().length()<=0)
+                            if(crudNomProd.getText().length()<=0)
                             {
                                 errUpd += "Error! El titol es obligatori\n";
                                 correcteUpd = false;
@@ -908,7 +900,7 @@ public class PProductes extends JPanel{
                                 
                                 String tipusProd = (String)cmbTipusProd.getSelectedItem();
                                 Estil estilProd = (Estil)cmbEstils.getSelectedItem();
-                                String titProd = crudTitol.getText();
+                                String titProd = crudNomProd.getText();
                                 String prodEstat = "";
                                 if(rbCrudActiu.isSelected())
                                 {

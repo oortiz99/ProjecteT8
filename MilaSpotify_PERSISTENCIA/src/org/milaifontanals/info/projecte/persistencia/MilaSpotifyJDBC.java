@@ -77,13 +77,13 @@ public class MilaSpotifyJDBC {
    
       private PreparedStatement qGetRefReproduccions;
     private PreparedStatement qGetAlbCon;
-    private PreparedStatement qGetRefLlistaCon;
+    private PreparedStatement qGetRefLlista;
     
     
     
     
-    private PreparedStatement qGetArtInd;
-    private PreparedStatement qGetArtGrup;
+    private PreparedStatement qGetArtIndividual;
+    private PreparedStatement qGetArtistaGrup;
     private PreparedStatement qGetArtistaFromId;
     
     private PreparedStatement qGetCansonsFiltreDialog;
@@ -160,10 +160,10 @@ public class MilaSpotifyJDBC {
             qGetProducteLlista = conn.prepareStatement(inst);
             
             inst = "select *  from ART_IND where ind_id = ?";        
-            qGetArtInd = conn.prepareStatement(inst);
+            qGetArtIndividual = conn.prepareStatement(inst);
             
             inst = "select * from ART_GRUP where GRP_ID = ?";
-            qGetArtGrup = conn.prepareStatement(inst);
+            qGetArtistaGrup = conn.prepareStatement(inst);
             
             inst = "select * from artista where art_id = ?";        
             qGetArtistaFromId = conn.prepareStatement(inst);
@@ -221,7 +221,7 @@ public class MilaSpotifyJDBC {
             inst = "select * from llista_contingut llc " +
             "join producte p on p.pro_id = llc.lic_id_llista " +
             "where lic_id_producte = ?";
-            qGetRefLlistaCon = conn.prepareStatement(inst);
+            qGetRefLlista = conn.prepareStatement(inst);
             
         } catch (SQLException ex) {
             throw new MilaSpotifyException("No es pot crear el PreparedStatement:\n " + inst + "\n" + ex.getMessage());
@@ -409,9 +409,9 @@ public class MilaSpotifyJDBC {
     {
         ArtistaIndividual a = null;
         try {
-            qGetArtInd.setInt(1, art_id);
+            qGetArtIndividual.setInt(1, art_id);
             
-            ResultSet rs = qGetArtInd.executeQuery();
+            ResultSet rs = qGetArtIndividual.executeQuery();
             
             while(rs.next())
             {
@@ -430,9 +430,9 @@ public class MilaSpotifyJDBC {
     {
         Grup g = null;
         try {
-            qGetArtGrup.setInt(1, art_id);
+            qGetArtistaGrup.setInt(1, art_id);
             
-            ResultSet rs = qGetArtGrup.executeQuery();
+            ResultSet rs = qGetArtistaGrup.executeQuery();
             
             while(rs.next())
             {
@@ -1075,8 +1075,6 @@ public class MilaSpotifyJDBC {
             switch(p.getPro_tipus())
             {
                 case CANSO:
-                    
-                    //fer comprovacio si aquesta canço esta en un album o llista
                     qGetAlbCon.setInt(1,p.getPro_id());
                     ResultSet rsRefAlbCon = qGetAlbCon.executeQuery();
 
@@ -1084,18 +1082,18 @@ public class MilaSpotifyJDBC {
                     {
                         noRef = false;
                         err+= rsRefAlbCon.getString("pro_titol")+"\n";
-                        //te referencies amb algun album
+                       
                     }
                     rsRefAlbCon.close();
                     
-                    qGetRefLlistaCon.setInt(1, p.getPro_id());
-                    ResultSet rsRefLlistaCon = qGetRefLlistaCon.executeQuery();
-                    while(rsRefLlistaCon.next())
+                    qGetRefLlista.setInt(1, p.getPro_id());
+                    ResultSet resRefLlista = qGetRefLlista.executeQuery();
+                    while(resRefLlista.next())
                     {
                         noRef = false;
-                        err+= rsRefLlistaCon.getString("pro_titol")+"\n";
+                        err+= resRefLlista.getString("pro_titol")+"\n";
                     }
-                    rsRefLlistaCon.close();
+                    resRefLlista.close();
                     
                     if(noRef==false)
                     {
@@ -1107,8 +1105,8 @@ public class MilaSpotifyJDBC {
                     break;
                 case ALBUM:
                  
-                    qGetRefLlistaCon.setInt(1, p.getPro_id());
-                    ResultSet resultllistaAlb = qGetRefLlistaCon.executeQuery();
+                    qGetRefLlista.setInt(1, p.getPro_id());
+                    ResultSet resultllistaAlb = qGetRefLlista.executeQuery();
                     while(resultllistaAlb.next())
                     {
                         noRef = false;
@@ -1145,11 +1143,7 @@ public class MilaSpotifyJDBC {
             throw new MilaSpotifyException("Error en el delete producte: "+ex.getMessage());
         }
     }
-    
-    
-    
-    
-    
+
     //_____________________________________________________________________________________
     public void tancar() throws MilaSpotifyException
     {
@@ -1183,10 +1177,4 @@ public class MilaSpotifyJDBC {
         }
     }
 
-  
-
-    
-   
-
-  
 }

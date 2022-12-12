@@ -52,7 +52,7 @@ public class AfegirProducteDialog extends JDialog
     private MilaSpotifyJDBC bd;
     private List<Artista> artistes = new ArrayList();
     private List<Producte> llistaProductesDelProd = new ArrayList();
-    //Falta afegir a bd per aprofitar la mateixa connexio
+   
     public AfegirProducteDialog(Frame aFrame,String tipus ,DefaultListModel llistaProductesAfegir,MilaSpotifyJDBC bd , List<Producte> llistaProductesDelProd)
     {
         super(aFrame,"Afegir Producte",true);
@@ -202,7 +202,7 @@ public class AfegirProducteDialog extends JDialog
                 break;
                 
                 case "Afegir":
-                   //retornem el id del producte a afegir
+              
                    if(JListProductes.getSelectedIndex()<0) 
                    {
                         JOptionPane.showMessageDialog(null,

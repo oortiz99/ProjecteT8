@@ -70,10 +70,17 @@ public class PProductes extends JPanel{
     private JCheckBox chkAlbum;
     private JCheckBox chkLlista;
     
+<<<<<<< HEAD
     private JRadioButton rbCrudEstatActiu;
     private JRadioButton rbCrudEstatInactiu;
     private JTextField crudNomProducte;
     private JComboBox cmbTipusProducte;
+=======
+    private JRadioButton rbCrudActiu;
+    private JRadioButton rbCrudInactiu;
+    private JTextField crudNomProd;
+    private JComboBox cmbTipusProd;
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
     private JComboBox cmbEstils;
     
     private JPanel panel_crud_canco;
@@ -299,10 +306,17 @@ public class PProductes extends JPanel{
         panel_crud_titol.setLayout(new BoxLayout(panel_crud_titol,BoxLayout.X_AXIS));
         JLabel lTitolCrud = new JLabel("Titol: ");
         panel_crud_titol.add(lTitolCrud);    
+<<<<<<< HEAD
         crudNomProducte = new JTextField("",20);
         crudNomProducte.setMaximumSize(crudNomProducte.getPreferredSize());
         
         panel_crud_titol.add(crudNomProducte);
+=======
+        crudNomProd = new JTextField("",20);
+        crudNomProd.setMaximumSize(crudNomProd.getPreferredSize());
+        
+        panel_crud_titol.add(crudNomProd);
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
         panel_crud_titol.setBorder(new EmptyBorder(10,10,0,0));
         panel_crud_producte.add(panel_crud_titol);
         JPanel panel_crud_actiu = new JPanel();
@@ -336,8 +350,13 @@ public class PProductes extends JPanel{
         
         panel_crud_actiu.add(panel_crud_estils);
         
+<<<<<<< HEAD
         panel_crud_producte.add(panel_crud_actiu);
       
+=======
+        panel_crud_producte.add(leftJustify(panel_crud_actiu));
+     
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
         JPanel panel_crud_can_any_creacio = new JPanel();
         panel_crud_can_any_creacio.setLayout(new BoxLayout(panel_crud_can_any_creacio,BoxLayout.X_AXIS));
         
@@ -360,7 +379,10 @@ public class PProductes extends JPanel{
         panel_crud_can_any_creacio.add(panel_crud_can_durada);  
         panel_crud_producte.add(panel_crud_can_any_creacio);
            
+<<<<<<< HEAD
      
+=======
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
         panel_crud_canco = new JPanel();
         panel_crud_canco.setLayout(new BoxLayout(panel_crud_canco,BoxLayout.Y_AXIS));
         panel_crud_canco.setVisible(true);
@@ -381,7 +403,11 @@ public class PProductes extends JPanel{
         
         panel_crud_canco.add(panel_crud_can_artistes);
         panel_crud_producte.add(panel_crud_canco);
+<<<<<<< HEAD
      
+=======
+       
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
         panel_crud_album = new JPanel();
         panel_crud_album.setVisible(false);
         panel_crud_album.setLayout(new BoxLayout(panel_crud_album,BoxLayout.Y_AXIS));
@@ -429,10 +455,14 @@ public class PProductes extends JPanel{
        
         
         panel_btn_add_del_prod.add(btnAfegirProducteA);    
+<<<<<<< HEAD
         
         
         
        
+=======
+     
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
         String header_taula[] = {"Titol","Estil","Tipus","Estat"};    
         taulaModel = new DefaultTableModel(0, header_taula.length)
         {          
@@ -456,7 +486,11 @@ public class PProductes extends JPanel{
                 if(index>=0)
                 {
                     Producte p = mProductes.get(index);
+<<<<<<< HEAD
                     crudNomProducte.setText(p.getPro_titol());
+=======
+                    crudNomProd.setText(p.getPro_titol());
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
                     cmbEstils.setSelectedItem(p.getPro_estil());
                     mProductesAlbLlis = new ArrayList();
                     llistaProductes.clear();
@@ -625,11 +659,203 @@ public class PProductes extends JPanel{
 
                 case "Crear":
                     
+<<<<<<< HEAD
                 {
                     try {
                         CrearPoducte();
                     } catch (MilaSpotifyException ex) {
                       
+=======
+                    String err = "";           
+                    boolean correcte = true;
+                    try
+                    {
+                        if(crudNomProd.getText().length()<=0)
+                        {
+                            err += "Error! El titol es obligatori\n";
+                            correcte = false;
+                        }
+                        
+                        if(rbCrudActiu.isSelected()==false && rbCrudInactiu.isSelected()==false)
+                        {
+                            err+= "Error! Tens que seleccionar el estat del producte\n";
+                            correcte = false;
+                        }
+                        
+                        if(correcte == false){
+                            throw new MilaSpotifyException(err);
+                        }
+                        else
+                        {
+                            String tipusProd = (String)cmbTipusProd.getSelectedItem();
+                            Estil estilProd = (Estil)cmbEstils.getSelectedItem();
+                            String titProd = crudNomProd.getText();
+                            String prodEstat = "";
+                            if(rbActiu.isSelected())
+                            {
+                              prodEstat = "S";
+                            }else if(rbInactiu.isSelected())
+                            {
+                              prodEstat = "N";
+                            } 
+                            
+                            switch(tipusProd)
+                            {
+                                case "Canço":
+                                    int anyCreacioCan = 0;
+                                    int duradaCan = 0;
+                                    if(txtCrudAnyCreacio.getText().length()<=0)
+                                    {
+                                        err += "Error! el any de creacio de la canço es obligatori \n";
+                                        correcte = false;
+                                    }else
+                                    {
+                                        try 
+                                        {
+                                            anyCreacioCan = Integer.parseInt(txtCrudAnyCreacio.getText());
+                                            if(anyCreacioCan<1900)
+                                            {
+                                                err += "Error! L'any de creacio no pot ser mes petit que l'any 1900";
+                                                correcte = false;
+                                            }
+                                        } catch (NumberFormatException nfe) 
+                                        {
+                                           err+="Error! el any de creacio ha de ser un numero! \n";
+                                           correcte = false;
+                                        }                                              
+                                    }
+                                    
+                                    if(txtCrudDurada.getText().length()<=0)
+                                    {
+                                        err += "Error! La durada de la canço es obligatori \n";
+                                        correcte = false;
+                                    }else
+                                    {
+                                        try 
+                                        {
+                                            duradaCan = Integer.parseInt(txtCrudAnyCreacio.getText());
+                                            if(duradaCan<=100)
+                                            {
+                                               
+                                                err+= "Error! la durada no pot ser mes petit o igual que 100";
+                                            }
+                                        } catch (NumberFormatException nfe) 
+                                        {
+                                           err+="Error! La durada de la canco te que ser un numeric \n";
+                                           correcte = false;
+                                        }                                              
+                                    }
+                                    
+                                    if(correcte == false)
+                                    {
+                                        throw new MilaSpotifyException(err);
+                                    }else
+                                    {
+                                        Canso c = null;
+                                       
+                                        if(cmbCrudCanArtista.getSelectedIndex()>0)
+                                        {
+                                            Artista a = (Artista)cmbCrudCanArtista.getSelectedItem();
+                                            c = new Canso(titProd,prodEstat,estilProd,anyCreacioCan,duradaCan,a);
+                                           
+                                        }else
+                                        {
+                                            c = new Canso(titProd,prodEstat,estilProd,anyCreacioCan,duradaCan);
+                                        }
+                                        
+                                        //insertarProducte
+                                        bd.addProducte(c);
+                                        Object[] o = new Object[5];                                           
+                                        o[0] = c.getPro_titol();
+                                        o[1] = c.getDurada();
+                                        o[2] = c.getPro_estil().getEst_nom();
+                                        o[3] = c.getPro_tipus();
+                                        o[4] = c.getPro_actiu()?"S":"N";
+                                        taulaModel.addRow(o);
+                                        mProductes.add(c);
+                                    }
+                                    
+                                break;
+                                case "Àlbum":
+                                   
+                                    int anyCreacioAlb = 0;
+                                    if(txtCrudAnyCreacio.getText().length()<=0)
+                                    {
+                                        err += "Error! el any de creacio del album es obligatori \n";
+                                        correcte = false;
+                                    }else
+                                    {
+                                        try 
+                                        {
+                                            anyCreacioCan = Integer.parseInt(txtCrudAnyCreacio.getText());
+                                            if(anyCreacioCan<1900)
+                                            {
+                                                err += "Error! L'any de creacio no pot ser mes petit que l'any 1900";
+                                                correcte = false;
+                                            }
+                                        } catch (NumberFormatException nfe) 
+                                        {
+                                           err+="Error! el any de creacio ha de ser un numero! \n";
+                                           correcte = false;
+                                        }                                              
+                                    }
+                                    if(correcte==false)
+                                    {
+                                        throw new MilaSpotifyException(err);
+                                    }                      
+                                    else
+                                    {
+                                        Album alb = new Album(titProd,prodEstat,estilProd,anyCreacioAlb);
+                                      
+                                        if(mProductesAlbLlis.size()>0)
+                                        {
+                                            for(Producte p: mProductesAlbLlis)
+                                            {
+                                                alb.addCanso((Canso)p);
+                                            }
+                                            
+                                        }
+                                        bd.addProducte(alb);
+                                        Object[] o = new Object[5];                                           
+                                        o[0] = alb.getPro_titol();
+                                        o[1] = alb.getDurada();
+                                        o[2] = alb.getPro_estil().getEst_nom();
+                                        o[3] = alb.getPro_tipus();
+                                        o[4] = alb.getPro_actiu()?"S":"N";
+                                        taulaModel.addRow(o);
+                                        mProductes.add(alb);                                    }                           
+                                break;
+                                case "Llista":
+                                   LlistaRep r = new LlistaRep(titProd,prodEstat,estilProd);
+                                    if(mProductesAlbLlis.size()>0)
+                                    {
+                                        for(Producte p: mProductesAlbLlis)
+                                        {
+                                            r.addItem(p);
+                                        }
+                                    }                              
+                                    bd.addProducte(r);
+                                    Object[] o = new Object[5];                                           
+                                    o[0] = r.getPro_titol();
+                                    o[1] = r.getDurada();
+                                    o[2] = r.getPro_estil().getEst_nom();
+                                    o[3] = r.getPro_tipus();
+                                    o[4] = r.getPro_actiu()?"S":"N";
+                                    taulaModel.addRow(o);
+                                    mProductes.add(r);   
+                                break;                    
+                            }
+                            
+                        }   
+                    }
+                    catch(MilaSpotifyException ex)
+                    {
+                        //cualsevol error
+                        JOptionPane.showMessageDialog(null,
+                        "Motiu: "+ex.getMessage(),
+                        "Error en crear el producte",
+                        JOptionPane.ERROR_MESSAGE);
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
                     }
                 }
                     
@@ -649,11 +875,207 @@ public class PProductes extends JPanel{
 
 
                 case "Guardar":
+<<<<<<< HEAD
                 {
                     try {
                         GuardarPoducte();
                     } catch (MilaSpotifyException ex) {
                        
+=======
+                  try
+                    {
+                        if(t_productes.getSelectedRow()<0)
+                        {
+                            throw new MilaSpotifyException("Tens que seleccionar un producte per guardar els canvis!");
+                        }else
+                        {                  
+                            String errUpd = "";
+                            boolean correcteUpd = true;
+                            int id_prod_selec = mProductes.get(t_productes.getSelectedRow()).getPro_id();//agafem la id del producte seleccionat ja 
+                          
+             
+                            if(crudNomProd.getText().length()<=0)
+                            {
+                                errUpd += "Error! El titol es obligatori\n";
+                                correcteUpd = false;
+                            }
+
+                            if(rbCrudActiu.isSelected()==false && rbCrudInactiu.isSelected()==false)
+                            {
+                                errUpd+= "Error! Tens que seleccionar el estat del producte\n";
+                                correcteUpd = false;
+                            }
+
+                            if(correcteUpd == false)
+                            {
+                                throw new MilaSpotifyException(errUpd);
+                            }else
+                            {
+                                
+                                String tipusProd = (String)cmbTipusProd.getSelectedItem();
+                                Estil estilProd = (Estil)cmbEstils.getSelectedItem();
+                                String titProd = crudNomProd.getText();
+                                String prodEstat = "";
+                                if(rbCrudActiu.isSelected())
+                                {
+                                  prodEstat = "S";
+                                }
+                                else if(rbCrudInactiu.isSelected())
+                                {
+                                  prodEstat = "N";
+                                } 
+                                switch(tipusProd)
+                                {
+                                    case "Canço":
+                                        int anyCreacioCan = 0;
+                                        int duradaCan = 0;
+                                        if(txtCrudAnyCreacio.getText().length()<=0)
+                                        {
+                                            errUpd += "Error! el any de creacio de la canço es obligatori \n";
+                                            correcte = false;
+                                        }else
+                                        {
+                                            try 
+                                            {
+                                                anyCreacioCan = Integer.parseInt(txtCrudAnyCreacio.getText());
+                                                if(anyCreacioCan<1900)
+                                                {
+                                                    errUpd += "Error! L'any de creacio no pot ser mes petit que l'any 1900";
+                                                    correcteUpd = false;
+                                                }
+                                            } catch (NumberFormatException nfe) 
+                                            {
+                                               errUpd+="Error! el any de creacio ha de ser un numero! \n";
+                                               correcteUpd = false;
+                                            }                                              
+                                        }
+
+                                        if(txtCrudDurada.getText().length()<=0)
+                                        {
+                                            errUpd += "Error! La durada de la canço es obligatori \n";
+                                            correcteUpd = false;
+                                        }else
+                                        {
+                                            try 
+                                            {
+                                                duradaCan = Integer.parseInt(txtCrudDurada.getText());
+                                                if(duradaCan<=100)
+                                                {
+                                                    //Aquesta restriccio la considero ja que una durada que tingui 1 s es ilogic
+                                                    //Per aixo miro que sigui mes gran a 100 , almenys que sigui realista
+                                                    correcteUpd = false;
+                                                    errUpd+= "Error! la durada no pot ser mes petit o igual que 100";
+                                                }
+                                            } catch (NumberFormatException nfe) 
+                                            {
+                                               errUpd+="Error! La durada de la canco te que ser un numeric \n";
+                                               correcte = false;
+                                            }                                              
+                                        }
+
+                                        if(correcteUpd == false)
+                                        {
+                                            throw new MilaSpotifyException(errUpd);
+                                        }else
+                                        {
+                                            Canso c = null;
+                                            //Si te un interpret l'agafem i el posem
+                                            if(cmbCrudCanArtista.getSelectedIndex()>0)
+                                            {
+                                                Artista a = (Artista)cmbCrudCanArtista.getSelectedItem();
+                                                c = new Canso(titProd,prodEstat,estilProd,anyCreacioCan,duradaCan,a);
+                                            }else
+                                            {
+                                                c = new Canso(titProd,prodEstat,estilProd,anyCreacioCan,duradaCan);
+                                            }
+                                           
+                                            c.setPro_id(id_prod_selec);
+                                            
+                                            bd.updProducte(c);
+                                            mProductes.set(mProductes.indexOf(c), c);
+                                            taulaModel.setValueAt(c.getPro_titol(),t_productes.getSelectedRow(), 0);
+                                            taulaModel.setValueAt(c.getDurada(),t_productes.getSelectedRow(), 1);
+                                            taulaModel.setValueAt(c.getPro_estil().getEst_nom(),t_productes.getSelectedRow(), 2);
+                                            taulaModel.setValueAt(c.getPro_tipus(),t_productes.getSelectedRow(), 3);
+                                            taulaModel.setValueAt(c.getPro_actiu()?"S":"N",t_productes.getSelectedRow(), 4);
+                                            
+                                        }
+
+                                    break;
+                                    case "Àlbum":
+                                        int anyCreacioAlb = 0;
+                                        if(txtCrudAnyCreacio.getText().length()<=0)
+                                        {
+                                            errUpd += "Error! el any de creacio del album es obligatori \n";
+                                            correcteUpd = false;
+                                        }else
+                                        {
+                                            try 
+                                            {
+                                                anyCreacioAlb = Integer.parseInt(txtCrudAnyCreacio.getText());
+                                                if(anyCreacioAlb<1900)
+                                                {
+                                                    errUpd += "Error! L'any de creacio no pot ser mes petit que l'any 1900";
+                                                    correcteUpd = false;
+                                                }
+                                            } catch (NumberFormatException nfe) 
+                                            {
+                                               errUpd+="Error! el any de creacio ha de ser un numero! \n";
+                                               correcteUpd = false;
+                                            }                                              
+                                        }
+                                        if(correcteUpd==false)
+                                        {
+                                            throw new MilaSpotifyException(errUpd);
+                                        }                      
+                                        else
+                                        {
+                                            Album alb = new Album(titProd,prodEstat,estilProd,anyCreacioAlb);
+                                            if(mProductesAlbLlis.size()>0)
+                                            {
+                                                for(Producte p: mProductesAlbLlis)
+                                                {
+                                                    alb.addCanso((Canso)p);
+                                                }
+                                            }
+                                            alb.setPro_id(id_prod_selec);
+                                            bd.updProducte(alb);
+                                            mProductes.set(mProductes.indexOf(alb), alb);
+                                            taulaModel.setValueAt(alb.getPro_titol(),t_productes.getSelectedRow(), 0);
+                                            taulaModel.setValueAt(alb.getDurada(),t_productes.getSelectedRow(), 1);
+                                            taulaModel.setValueAt(alb.getPro_estil().getEst_nom(),t_productes.getSelectedRow(), 2);
+                                            taulaModel.setValueAt(alb.getPro_tipus(),t_productes.getSelectedRow(), 3);
+                                            taulaModel.setValueAt(alb.getPro_actiu()?"S":"N",t_productes.getSelectedRow(), 4);
+                                        }                           
+                                    break;
+                                    case "Llista":
+                                        LlistaRep r = new LlistaRep(titProd,prodEstat,estilProd);
+                                        if(mProductesAlbLlis.size()>0)
+                                        {
+                                            for(Producte p: mProductesAlbLlis)
+                                            {
+                                                r.addItem(p);
+                                            }
+                                        } 
+                                        r.setPro_id(id_prod_selec);
+                                        bd.updProducte(r);
+                                        mProductes.set(mProductes.indexOf(r), r);
+                                        taulaModel.setValueAt(r.getPro_titol(),t_productes.getSelectedRow(), 0);
+                                        taulaModel.setValueAt(r.getDurada(),t_productes.getSelectedRow(), 1);
+                                        taulaModel.setValueAt(r.getPro_estil().getEst_nom(),t_productes.getSelectedRow(), 2);
+                                        taulaModel.setValueAt(r.getPro_tipus(),t_productes.getSelectedRow(), 3);
+                                        taulaModel.setValueAt(r.getPro_actiu()?"S":"N",t_productes.getSelectedRow(), 4);
+                                    break;                    
+                                }                               
+                            }
+                        }   
+                    }catch(MilaSpotifyException ex)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                        "Motiu: "+ex.getMessage(),
+                        "Error en guardar el producte",
+                        JOptionPane.ERROR_MESSAGE);
+>>>>>>> cca5598f3dcceeff6c4e613145b77952191d8550
                     }
                 }
                 break;

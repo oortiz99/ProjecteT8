@@ -32,7 +32,7 @@ public class MilaSpotifyCon extends JFrame{
         ui.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         ui.addWindowListener(new TancamentFinestra());
         initMenuBar();        
-        ui.setPreferredSize(new Dimension(1000,800));
+        ui.setPreferredSize(new Dimension(2000,900));
         ui.setResizable(false);
         ui.setVisible(true);     
         

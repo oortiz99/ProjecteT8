@@ -115,8 +115,8 @@ public class MilaSpotifyJDBC {
         } catch (SQLException ex) {
             throw new RuntimeException("No es pot establir la connexió.\n" + ex.getMessage());
         }
-        // Una vegada ja hem establert connexió, intentem crear tots els PreparedStatement
-        // que usarem a l'aplicació
+       
+       
         String inst = null;
         try {
             inst = "insert into REPRODUCCIO (rep_id_client,rep_moment_temporal,rep_id_producte) values (?,?,?)";
@@ -850,14 +850,14 @@ public class MilaSpotifyJDBC {
                     ResultSet generatedKeysAlb = qAddProducte.getGeneratedKeys();                 
                     if (generatedKeysAlb.next()) 
                     {
-                       //insertem la canco
+                      
                        int alb_id = generatedKeysAlb.getInt(1);
                        a.setPro_id(alb_id);
                        addProducteAlbum(a);
                     }
                     else 
                     {
-                        //Si no agafa la id , teoricament no existeix el producte insertat
+                       
                         throw new SQLException("Error en crear el producte, no ha trobat la id del producte a insertat");
                     }
                 break;
@@ -868,14 +868,14 @@ public class MilaSpotifyJDBC {
                     ResultSet generatedKeysLlista = qAddProducte.getGeneratedKeys();                 
                     if (generatedKeysLlista.next()) 
                     {
-                       //insertem la canco
+                       
                        int lis_id = generatedKeysLlista.getInt(1);
                        r.setPro_id(lis_id);
                        addProducteLlista(r);
                     }
                     else 
                     {
-                        //Si no agafa la id , teoricament no existeix el producte insertat
+                       
                         throw new SQLException("Error en crear el producte, no ha trobat la id del producte a insertat");
                     }
                 break;
@@ -1068,8 +1068,13 @@ public class MilaSpotifyJDBC {
             
             if(rsRefRep.next())
             {
-                rsRefRep.close();
-                throw new MilaSpotifyException("aquest producte  te reproduccions , eliminales abans!!");
+                int qt = rsRefRep.getInt("qtat");
+                if(qt>0)
+                {
+                    rsRefRep.close();
+                    throw new MilaSpotifyException("aquest producte  te reproduccions , eliminales abans!!");
+                }
+              
             }
             
             switch(p.getPro_tipus())
